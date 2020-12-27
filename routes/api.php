@@ -17,8 +17,16 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
+// Line for roles
 Route::get('/role-all', 'RoleController@index');
 Route::post('/role', 'RoleController@store');
 Route::get('/role/{id}', 'RoleController@show');
 Route::put('/role/{id}', 'RoleController@update');
 Route::delete('/role/{id}', 'RoleController@destroy');
+
+// Line for services
+Route::get('/service-all', 'ServiceController@index');
+Route::post('/service', 'ServiceController@store');
+Route::get('/service/{id}', 'ServiceController@show');
+Route::put('/service/{id}', 'ServiceController@update');
+Route::delete('/service/{id}', 'ServiceController@destroy');

@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 // Model Line
-use App\Models\Role;
+Use App\Models\Service;
 
 // Request Line
-use App\Http\Requests\RoleRequest;
+use App\Http\Requests\ServiceRequest;
 
-class RoleController extends Controller
+class ServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,18 +19,18 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
+        $services = Service::all();
 
-        // Checking if role was exist and return 404 if not found
-        if (empty($roles[0])) {
+        // Checking if Service table is not empty and return 404 if not found
+        if (empty($services[0])) {
             return response()->json([
-                'data'      =>  "No one role has created",
+                'data'      =>  "No one service has created",
                 'status'    =>  "Not Success"
             ], 404);
         }
 
         return response()->json([
-            'data'      => $roles,
+            'data'      => $services,
             'status'    => "Success"
         ], 200);
     }
@@ -41,15 +41,17 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RoleRequest $request)
+    public function store(ServiceRequest $request)
     {
-        $role = Role::create([
-            'name'  =>  $request->name
+        $service = Service::create([
+            'title'  =>  $request->title,
+            'description'  =>  $request->description,
+            'image_url'  =>  $request->image_url,
         ]);
 
         return response()->json([
-            'data'      =>  $role,
-            'status'    =>  "Role Was Added"
+            'data'      =>  $service,
+            'status'    =>  "Service Was Added"
         ], 200);
     }
 
@@ -61,18 +63,18 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        $role = Role::find($id);
+        $service = Service::find($id);
 
-        // Checking if role was exist and return 404 if not found
-        if (empty($role)) {
+        // Checking if service was exist and return 404 if not found
+        if (empty($service)) {
             return response()->json([
-                'data'      =>  "Role Not Found",
+                'data'      =>  "Service Not Found",
                 'status'    =>  "Not Success"
             ], 404);
         }
 
         return response()->json([
-            'data'      =>  $role,
+            'data'      =>  $service,
             'status'    =>  "Success"
         ], 200);
     }
@@ -84,25 +86,27 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(RoleRequest $request, $id)
+    public function update(ServiceRequest $request, $id)
     {
-        $role = Role::find($id);
+        $service = Service::find($id);
 
-        // Checking if role was exist and return 404 if not found
-        if (empty($role)) {
+        // Checking if service was exist and return 404 if not found
+        if (empty($service)) {
             return response()->json([
-                'data'      =>  "Role Not Found",
+                'data'      =>  "Service Not Found",
                 'status'    =>  "Not Success"
             ], 404);
         }
 
-        $role->update([
-            'name'  =>  $request->name
+        $servic->update([
+            'title'  =>  $request->title,
+            'description'  =>  $request->description,
+            'image_url'  =>  $request->image_url,
         ]);
 
         return response()->json([
-            'data'      =>  $role,
-            'status'    =>  "Role was Updated"
+            'data'      =>  $service,
+            'status'    =>  "Service was Updated"
         ], 200);
     }
 
@@ -114,21 +118,21 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $role = Role::find($id);
+        $service = Service::find($id);
 
-        // Checking if role was exist and return 404 if not found
-        if (empty($role)) {
+        // Checking if service was exist and return 404 if not found
+        if (empty($service)) {
             return response()->json([
-                'data'      =>  "Role Not Found",
+                'data'      =>  "Service Not Found",
                 'status'    =>  "Not Success"
             ], 404);
         }
 
-        $role->delete();
+        $service->delete();
 
         return response()->json([
-            'data'      =>  $role,
-            'status'    =>  "Role was Deleted"
+            'data'      =>  $service,
+            'status'    =>  "Service was Deleted"
         ], 200);
     }
 }
