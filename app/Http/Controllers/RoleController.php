@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+// Model Line
+use App\Models\Role;
+
+// Request Line
+use App\Http\Requests\RoleRequest;
+
 class RoleController extends Controller
 {
     /**
@@ -13,7 +19,20 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Role::all();
+
+        // Checking if role was exist and return 404 if not found
+        if (empty($roles)) {
+            return response()->json([
+                'data'      =>  "No one role has created",
+                'status'    =>  "Not Success"
+            ], 404);
+        }
+
+        return response()->json([
+            'data'      => $roles,
+            'status'    => "Success"
+        ], 200);
     }
 
     /**
@@ -22,9 +41,16 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
-        //
+        $role = Role::create([
+            'name'  =>  $request->name
+        ]);
+
+        return response()->json([
+            'data'      =>  $role,
+            'status'    =>  "Role Was Added"
+        ], 200);
     }
 
     /**
@@ -35,7 +61,20 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        //
+        $role = Role::find($id);
+
+        // Checking if role was exist and return 404 if not found
+        if (empty($role)) {
+            return response()->json([
+                'data'      =>  "Role Not Found",
+                'status'    =>  "Not Success"
+            ], 404);
+        }
+
+        return response()->json([
+            'data'      =>  $role,
+            'status'    =>  "Success"
+        ], 200);
     }
 
     /**
@@ -45,9 +84,26 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RoleRequest $request, $id)
     {
-        //
+        $role = Role::find($id);
+
+        // Checking if role was exist and return 404 if not found
+        if (empty($role)) {
+            return response()->json([
+                'data'      =>  "Role Not Found",
+                'status'    =>  "Not Success"
+            ], 404);
+        }
+
+        $role->update([
+            'name'  =>  $request->name
+        ]);
+
+        return response()->json([
+            'data'      =>  $role,
+            'status'    =>  "Role was Updated"
+        ], 200);
     }
 
     /**
@@ -58,6 +114,21 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $role = Role::find($id);
+
+        // Checking if role was exist and return 404 if not found
+        if (empty($role)) {
+            return response()->json([
+                'data'      =>  "Role Not Found",
+                'status'    =>  "Not Success"
+            ], 404);
+        }
+
+        $role->delete();
+
+        return response()->json([
+            'data'      =>  $role,
+            'status'    =>  "Role was Deleted"
+        ], 200);
     }
 }
