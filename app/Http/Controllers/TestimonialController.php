@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 // Model Line
-Use App\Models\Service;
+Use App\Models\Testimonial;
 
 // Request Line
-use App\Http\Requests\ServiceRequest;
+use App\Http\Requests\TestimonialRequest;
 
-class ServiceController extends Controller
+class TestimonialController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,18 +19,18 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::all();
+        $testimonials = Testimonial::all();
 
-        // Checking if Service table is not empty and return 404 if not found
-        if (empty($services[0])) {
+        // Checking if testimonial table is not empty and return 404 if not found
+        if (empty($testimonials[0])) {
             return response()->json([
-                'data'      =>  "No one service has created",
+                'data'      =>  "No one testimonial has created",
                 'status'    =>  "Not Success"
             ], 404);
         }
 
         return response()->json([
-            'data'      => $services,
+            'data'      => $testimonials,
             'status'    => "Success"
         ], 200);
     }
@@ -41,16 +41,15 @@ class ServiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ServiceRequest $request)
+    public function store(TestimonialRequest $request)
     {
-        $service = Service::create([
-            'title'  =>  $request->title,
-            'description'  =>  $request->description,
-            'image_url'  =>  $request->image_url,
+        $testimonial = Testimonial::create([
+            'name'  =>  $request->name,
+            'testimonial'  =>  $request->testimonial,
         ]);
 
         return response()->json([
-            'data'      =>  $service,
+            'data'      =>  $testimonial,
             'status'    =>  "Service Was Added"
         ], 200);
     }
@@ -63,18 +62,18 @@ class ServiceController extends Controller
      */
     public function show($id)
     {
-        $service = Service::find($id);
+        $testimonial = Testimonial::find($id);
 
-        // Checking if service was exist and return 404 if not found
-        if (empty($service)) {
+        // Checking if testimonial was exist and return 404 if not found
+        if (empty($testimonial)) {
             return response()->json([
-                'data'      =>  "Service Not Found",
+                'data'      =>  "Testimonial Not Found",
                 'status'    =>  "Not Success"
             ], 404);
         }
 
         return response()->json([
-            'data'      =>  $service,
+            'data'      =>  $testimonial,
             'status'    =>  "Success"
         ], 200);
     }
@@ -86,27 +85,26 @@ class ServiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ServiceRequest $request, $id)
+    public function update(TestimonialRequest $request, $id)
     {
-        $service = Service::find($id);
+        $testimonial = Testimonial::find($id);
 
-        // Checking if service was exist and return 404 if not found
-        if (empty($service)) {
+        // Checking if testimonial was exist and return 404 if not found
+        if (empty($testimonial)) {
             return response()->json([
-                'data'      =>  "Service Not Found",
+                'data'      =>  "Testimonial Not Found",
                 'status'    =>  "Not Success"
             ], 404);
         }
 
-        $service->update([
-            'title'  =>  $request->title,
-            'description'  =>  $request->description,
-            'image_url'  =>  $request->image_url,
+        $testimonial->update([
+            'name'  =>  $request->name,
+            'testimonial'  =>  $request->testimonial,
         ]);
 
         return response()->json([
-            'data'      =>  $service,
-            'status'    =>  "Service was Updated"
+            'data'      =>  $testimonial,
+            'status'    =>  "Testimonial was Updated"
         ], 200);
     }
 
@@ -118,21 +116,21 @@ class ServiceController extends Controller
      */
     public function destroy($id)
     {
-        $service = Service::find($id);
+        $testimonial = Testimonial::find($id);
 
-        // Checking if service was exist and return 404 if not found
-        if (empty($service)) {
+        // Checking if testimonial was exist and return 404 if not found
+        if (empty($testimonial)) {
             return response()->json([
-                'data'      =>  "Service Not Found",
+                'data'      =>  "Testimonial Not Found",
                 'status'    =>  "Not Success"
             ], 404);
         }
 
-        $service->delete();
+        $testimonial->delete();
 
         return response()->json([
-            'data'      =>  $service,
-            'status'    =>  "Service was Deleted"
+            'data'      =>  $testimonial,
+            'status'    =>  "Testimonial was Deleted"
         ], 200);
     }
 }

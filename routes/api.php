@@ -30,3 +30,10 @@ Route::post('/service', 'ServiceController@store');
 Route::get('/service/{id}', 'ServiceController@show');
 Route::put('/service/{id}', 'ServiceController@update');
 Route::delete('/service/{id}', 'ServiceController@destroy');
+
+// Line for testimonials
+Route::get('/testimonial-all', 'TestimonialController@index');
+Route::post('/testimonial', 'TestimonialController@store');
+Route::get('/testimonial/{id}', 'TestimonialController@show');
+Route::put('/testimonial/{id}', 'TestimonialController@update');
+Route::delete('/testimonial/{id}', 'TestimonialController@destroy');
