@@ -37,3 +37,10 @@ Route::post('/testimonial', 'TestimonialController@store');
 Route::get('/testimonial/{id}', 'TestimonialController@show');
 Route::put('/testimonial/{id}', 'TestimonialController@update');
 Route::delete('/testimonial/{id}', 'TestimonialController@destroy');
+
+// Line for why us
+Route::get('/why-us-all', 'WhyUsController@index');
+Route::post('/why-us', 'WhyUsController@store');
+Route::get('/why-us/{id}', 'WhyUsController@show');
+Route::put('/why-us/{id}', 'WhyUsController@update');
+Route::delete('/why-us/{id}', 'WhyUsController@destroy');
