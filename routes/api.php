@@ -17,12 +17,33 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
-// Line for roles
-Route::get('/role-all', 'RoleController@index');
-Route::post('/role', 'RoleController@store');
-Route::get('/role/{id}', 'RoleController@show');
-Route::put('/role/{id}', 'RoleController@update');
-Route::delete('/role/{id}', 'RoleController@destroy');
+// Route::post('register', 'UserController@register');
+// Route::post('login', 'UserController@login');
+// Route::get('user', 'UserController@getAuthenticatedUser')->middleware('jwt.verify');
+
+Route::group([
+
+	'middleware' => 'api',
+	'prefix' => 'auth'
+
+], function ($router) {
+
+	Route::post('login', 'AuthController@login');
+	Route::post('logout', 'AuthController@logout');
+	Route::post('refresh', 'AuthController@refresh');
+	Route::post('me', 'AuthController@me');
+
+});
+
+Route::group(['middleware' => ['auth','api']], function () {
+
+	// Line for roles
+	Route::get('/role-all', 'RoleController@index');
+	Route::post('/role', 'RoleController@store');
+	Route::get('/role/{id}', 'RoleController@show');
+	Route::put('/role/{id}', 'RoleController@update');
+	Route::delete('/role/{id}', 'RoleController@destroy');
+});
 
 // Line for services
 Route::get('/service-all', 'ServiceController@index');
